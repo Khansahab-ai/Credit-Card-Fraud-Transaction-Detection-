@@ -1,0 +1,29 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+frau_venv/
+
+# VS Code
+.vscode/
+
+# Logs and temporary files
+*.log
+temp/
+tmp/
+
+# Large datasets and generated files
+data/
+datasets/
+*.parquet
+
+# OS files
+.DS_Store
+Thumbs.db

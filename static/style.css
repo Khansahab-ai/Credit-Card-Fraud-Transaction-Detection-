@@ -1,0 +1,1012 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+/* ==========================================================================
+   Design Tokens & CSS Variables (Cyber-Fintech Theme)
+   ========================================================================== */
+
+:root {
+    color-scheme: dark;
+
+    /* Base Palette */
+    --bg-base: #060913;
+    --card-bg: rgba(13, 20, 38, 0.78);
+    --card-border: rgba(255, 255, 255, 0.09);
+    --card-glow: rgba(99, 102, 241, 0.15);
+
+    /* Text Colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+
+    /* Input Surface */
+    --input-bg: rgba(10, 16, 32, 0.72);
+    --input-bg-focus: rgba(13, 22, 44, 0.95);
+    --input-border: rgba(148, 163, 184, 0.22);
+    --input-border-hover: rgba(129, 140, 248, 0.45);
+    --input-border-focus: #818cf8;
+    --input-focus-ring: rgba(99, 102, 241, 0.28);
+
+    /* Cyber Accents */
+    --accent-indigo: #6366f1;
+    --accent-indigo-light: #818cf8;
+    --accent-purple: #8b5cf6;
+    --accent-violet: #7c3aed;
+    --accent-cyan: #06b6d4;
+    --accent-emerald: #10b981;
+    --accent-rose: #f43f5e;
+    --accent-amber: #f59e0b;
+
+    /* Shadows & Effects */
+    --shadow-card: 
+        0 24px 60px -12px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    --shadow-btn: 0 8px 24px -4px rgba(79, 70, 229, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    --shadow-btn-hover: 0 14px 32px -4px rgba(99, 102, 241, 0.68), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ==========================================================================
+   CSS Reset & Base Setup
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    min-height: 100vh;
+    padding: 32px 20px;
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background-color: var(--bg-base);
+    background-image:
+        radial-gradient(circle at 12% 15%, rgba(99, 102, 241, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 88% 85%, rgba(139, 92, 246, 0.16) 0%, transparent 45%),
+        radial-gradient(circle at 80% 12%, rgba(6, 182, 212, 0.10) 0%, transparent 38%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    background-attachment: fixed;
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   Application Container
+   ========================================================================== */
+
+.app {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ==========================================================================
+   Header & Sentinel Branding
+   ========================================================================== */
+
+header {
+    width: 100%;
+    text-align: center;
+    padding: 8px 0 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+header h2 {
+    margin: 0;
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-shadow: 0 2px 24px rgba(129, 140, 248, 0.45);
+}
+
+header p {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 16px;
+    border-radius: 9999px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(129, 140, 248, 0.22);
+    color: #c7d2fe;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(8px);
+}
+
+header p::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--accent-emerald);
+    box-shadow: 0 0 10px var(--accent-emerald);
+    animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+    }
+}
+
+/* ==========================================================================
+   Main Form Card (Glassmorphism)
+   ========================================================================== */
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    padding: 32px 36px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    overflow: hidden;
+}
+
+/* Subtle gradient top glow inside card */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(129, 140, 248, 0.6),
+        rgba(199, 210, 254, 0.8),
+        rgba(129, 140, 248, 0.6),
+        transparent
+    );
+    pointer-events: none;
+}
+
+.card h1 {
+    margin: 0 0 8px;
+    color: var(--text-primary);
+    font-size: 26px;
+    font-weight: 750;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+}
+
+.subtitle {
+    margin: 0 0 24px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Form Grid Layout
+   ========================================================================== */
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+    row-gap: 16px;
+    align-items: end;
+}
+
+
+/* Labels */
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+}
+
+label:focus-within {
+    color: var(--accent-indigo-light);
+}
+
+/* ==========================================================================
+   Input Fields & Select Elements
+   ========================================================================== */
+
+input,
+select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    outline: none;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+input:hover,
+select:hover {
+    border-color: var(--input-border-hover);
+    background: rgba(14, 22, 44, 0.85);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--input-border-focus);
+    background: var(--input-bg-focus);
+    box-shadow:
+        0 0 0 3px var(--input-focus-ring),
+        0 0 20px -2px rgba(99, 102, 241, 0.25),
+        inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Select Dropdown Arrow */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 14px) center;
+    background-size: 15px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #0b1122;
+    color: var(--text-primary);
+    padding: 10px;
+}
+
+/* Input with Icon Wrapper */
+.input-with-icon {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon input {
+    padding-right: 42px;
+}
+
+/* Field Icon Button (Calendar / Clock Trigger) */
+.field-icon-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    min-height: unset;
+    border: 1px solid rgba(129, 140, 248, 0.25);
+    border-radius: 8px;
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--text-primary);
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+}
+
+.field-icon-btn:hover {
+    background: rgba(99, 102, 241, 0.35);
+    border-color: rgba(129, 140, 248, 0.6);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+    transform: translateY(-50%) scale(1.06);
+    filter: none;
+}
+
+/* Polished Date and Time Picker Inputs */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+    cursor: pointer;
+    font-family: var(--font-mono), var(--font-sans);
+    font-size: 13.5px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.85) sepia(0.2) saturate(2.5) hue-rotate(185deg);
+    cursor: pointer;
+    opacity: 0.85;
+    padding: 3px;
+    margin-right: 28px;
+    transition: opacity 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Interactive Clock Widget Dropdown
+   ========================================================================== */
+
+.time-widget-container {
+    position: relative;
+}
+
+.clock-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 290px;
+    padding: 18px 20px;
+    background: rgba(13, 20, 38, 0.96);
+    border: 1px solid rgba(129, 140, 248, 0.4);
+    border-radius: 18px;
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(99, 102, 241, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: clockPopup 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.clock-dropdown[hidden] {
+    display: none !important;
+}
+
+@keyframes clockPopup {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.clock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.clock-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-indigo-light);
+}
+
+.clock-now-btn {
+    width: auto;
+    min-height: unset;
+    margin: 0;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    color: #c7d2fe;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.clock-now-btn:hover {
+    background: rgba(99, 102, 241, 0.4);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+    transform: none;
+    filter: none;
+}
+
+/* Digital Display Section */
+.clock-display-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    background: rgba(8, 13, 26, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.clock-digit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.clock-arrow-btn {
+    width: 32px;
+    height: 22px;
+    min-height: unset;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.15s ease;
+}
+
+.clock-arrow-btn:hover {
+    background: rgba(99, 102, 241, 0.35);
+    color: #ffffff;
+    border-color: rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+    transform: none;
+    filter: none;
+}
+
+.clock-digit {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 750;
+    color: #ffffff;
+    min-width: 44px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
+}
+
+.clock-colon {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent-indigo-light);
+    margin: 0 -2px;
+    animation: colonBlink 1.5s infinite;
+}
+
+@keyframes colonBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.clock-ampm-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 6px;
+}
+
+.ampm-btn {
+    width: 38px;
+    height: 24px;
+    min-height: unset;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.ampm-btn.active {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-color: rgba(165, 180, 252, 0.4);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+}
+
+/* Preset Chips */
+.clock-presets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.preset-chip {
+    width: 100%;
+    min-height: unset;
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.preset-chip:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(129, 140, 248, 0.4);
+    color: #ffffff;
+    transform: none;
+    filter: none;
+}
+
+/* Confirm Button */
+.clock-confirm-btn {
+    width: 100%;
+    min-height: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    transition: all 0.2s ease;
+}
+
+.clock-confirm-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.55);
+    transform: none;
+}
+
+/* Monospace font accent for coordinates and numerical inputs */
+input[type="number"] {
+    font-family: var(--font-mono), var(--font-sans);
+    font-size: 13.5px;
+    letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Cyberpunk Section Dividers
+   ========================================================================== */
+
+form h3 {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0 2px;
+    padding: 0;
+    border: none;
+    color: var(--accent-indigo-light);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+form h3::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--accent-indigo);
+    box-shadow: 0 0 8px var(--accent-indigo);
+}
+
+form h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(99, 102, 241, 0.4) 0%,
+        rgba(255, 255, 255, 0.07) 50%,
+        transparent 100%
+    );
+}
+
+/* ==========================================================================
+   Submit Button
+   ========================================================================== */
+
+button,
+#submit-btn {
+    grid-column: 1 / -1;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 8px;
+    padding: 12px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #7c3aed 100%);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: var(--shadow-btn);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Radiant button shimmer effect on hover */
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.22),
+        transparent
+    );
+    transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover::before {
+    transform: translateX(200%);
+}
+
+button:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-btn-hover);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px -2px rgba(79, 70, 229, 0.45);
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(165, 180, 252, 0.5),
+        0 8px 24px -4px rgba(79, 70, 229, 0.5);
+}
+
+button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    transform: none;
+    box-shadow: none;
+    filter: grayscale(0.2);
+}
+
+/* ==========================================================================
+   Error Alert Banner
+   ========================================================================== */
+
+.error:not([hidden]) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0 0;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.38);
+    color: #fca5a5;
+    font-size: 13.5px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    animation: errorSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.error:not([hidden])::before {
+    content: '⚠️';
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+@keyframes errorSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Prediction Result Card (Telemetry Display)
+   ========================================================================== */
+
+.result:not([hidden]) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+    padding: 34px 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    background: linear-gradient(180deg, rgba(17, 26, 52, 0.88) 0%, rgba(11, 17, 36, 0.88) 100%);
+    box-shadow:
+        0 24px 64px -12px rgba(0, 0, 0, 0.75),
+        0 0 45px -10px rgba(99, 102, 241, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    animation: resultReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes resultReveal {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.result h2 {
+    margin: 0 0 14px;
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+
+.result p:first-of-type {
+    margin: 0 0 6px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.result h1 {
+    font-family: var(--font-mono);
+    font-size: clamp(42px, 7vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 14px;
+    background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 75%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 24px rgba(99, 102, 241, 0.45));
+    letter-spacing: -0.03em;
+}
+
+#risk-level {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(99, 102, 241, 0.15);
+    color: #c7d2fe;
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    margin: 0 0 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+#notice {
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0;
+    background: rgba(10, 16, 32, 0.55);
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Tablet & Compact Desktop (max 768px) */
+@media (max-width: 768px) {
+    body {
+        padding: 24px 16px;
+    }
+
+    .card {
+        padding: 26px 24px;
+        border-radius: 16px;
+    }
+
+    .card h1 {
+        font-size: 24px;
+    }
+
+    form {
+        column-gap: 14px;
+        row-gap: 14px;
+    }
+
+    input,
+    select {
+        height: 42px;
+    }
+
+    button,
+    #submit-btn {
+        min-height: 46px;
+    }
+}
+
+/* Mobile Devices (max 520px) */
+@media (max-width: 520px) {
+    body {
+        padding: 16px 12px;
+    }
+
+    .app {
+        gap: 14px;
+    }
+
+    header h2 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+
+    .card {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .card h1 {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        row-gap: 14px;
+    }
+
+    form > label:last-of-type,
+    label:has(input[name="city_population"]) {
+        grid-column: 1;
+    }
+
+    form h3 {
+        grid-column: 1;
+        margin-top: 8px;
+        font-size: 11.5px;
+    }
+
+    input,
+    select {
+        height: 44px;
+        font-size: 13.5px;
+    }
+
+    button,
+    #submit-btn {
+        grid-column: 1;
+        min-height: 46px;
+        font-size: 14px;
+    }
+
+    .result:not([hidden]) {
+        padding: 24px 18px;
+    }
+
+    .result h1 {
+        font-size: 40px;
+    }
+}
+
+/* ==========================================================================
+   Accessibility: Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    button:hover,
+    button:active {
+        transform: none !important;
+    }
+}

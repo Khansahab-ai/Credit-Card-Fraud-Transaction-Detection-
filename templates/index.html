@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Fraud Sentinel</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <h2>🛡️ AI Fraud Sentinel</h2>
+            <p>Intelligent transaction risk detection</p>
+        </header>
+
+        <main>
+            <section class="card">
+                <h1>Analyze a transaction</h1>
+                <p class="subtitle">Enter transaction details to estimate fraud risk.</p>
+
+                <form action="submit" method="post" id="transaction-form">
+                    <label>
+                        Amount ($)
+                        <input name="amount" type="number" min="0.01" step="0.01" value="125.50" required>
+                    </label>
+                    <label>
+                        Category
+                        <select name="category" id="category" required>
+                            <option value="">Loading categories...</option>
+                        </select>
+                    </label>
+                    <label for="transaction_date">
+                        Transaction date
+                        <div class="input-with-icon">
+                            <input id="transaction_date" name="transaction_date" type="date" required>
+                            <button type="button" class="field-icon-btn" id="date-picker-btn" aria-label="Open Calendar"
+                                title="Open Calendar">
+                                📅
+                            </button>
+                        </div>
+                    </label>
+                    <label for="transaction_time">
+                        Transaction time
+                        <div class="input-with-icon time-widget-container">
+                            <input id="transaction_time" name="transaction_time" type="time" step="60" required>
+                            <button type="button" class="field-icon-btn" id="time-picker-btn"
+                                aria-label="Open Clock Widget" title="Open Clock Widget">
+                                🕒
+                            </button>
+                            <!-- Custom Interactive Clock Widget Dropdown -->
+                            <div class="clock-dropdown" id="clock-dropdown" hidden>
+                                <div class="clock-header">
+                                    <span class="clock-title">Interactive Clock</span>
+                                    <button type="button" class="clock-now-btn" id="clock-now-btn">⚡ Now</button>
+                                </div>
+                                <div class="clock-display-wrap">
+                                    <div class="clock-digit-box">
+                                        <button type="button" class="clock-arrow-btn" id="hour-up">▲</button>
+                                        <span class="clock-digit" id="clock-hour-val">12</span>
+                                        <button type="button" class="clock-arrow-btn" id="hour-down">▼</button>
+                                    </div>
+                                    <span class="clock-colon">:</span>
+                                    <div class="clock-digit-box">
+                                        <button type="button" class="clock-arrow-btn" id="min-up">▲</button>
+                                        <span class="clock-digit" id="clock-min-val">00</span>
+                                        <button type="button" class="clock-arrow-btn" id="min-down">▼</button>
+                                    </div>
+                                    <div class="clock-ampm-box">
+                                        <button type="button" class="ampm-btn active" id="ampm-am">AM</button>
+                                        <button type="button" class="ampm-btn" id="ampm-pm">PM</button>
+                                    </div>
+                                </div>
+                                <div class="clock-presets">
+                                    <button type="button" class="preset-chip" data-time="09:00">09:00 AM</button>
+                                    <button type="button" class="preset-chip" data-time="13:00">01:00 PM</button>
+                                    <button type="button" class="preset-chip" data-time="18:30">06:30 PM</button>
+                                    <button type="button" class="preset-chip" data-time="22:00">10:00 PM</button>
+                                </div>
+                                <button type="button" class="clock-confirm-btn" id="clock-done-btn">Confirm
+                                    Time</button>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label for="date_of_birth">
+                        Date of birth
+                        <div class="input-with-icon">
+                            <input id="date_of_birth" name="date_of_birth" type="date" value="1990-05-20" required>
+                            <button type="button" class="field-icon-btn" id="dob-picker-btn" aria-label="Open Calendar"
+                                title="Open Calendar">
+                                📅
+                            </button>
+                        </div>
+                    </label>
+
+                    <label for="city_population">
+                        City population
+                        <input id="city_population" name="city_population" type="number" min="0" step="1"
+                            value="8500000" required>
+                    </label>
+
+                    <h3>Customer location</h3>
+
+                    <label>
+                        Latitude
+                        <input name="customer_lat" type="number" step="any" min="-90" max="90" value="40.7128" required>
+                    </label>
+
+                    <label>
+                        Longitude
+                        <input name="customer_lon" type="number" step="any" min="-180" max="180" value="-74.0060"
+                            required>
+                    </label>
+
+                    <h3>Merchant location</h3>
+
+                    <label>
+                        Latitude
+                        <input name="merchant_lat" type="number" step="any" min="-90" max="90" value="40.7306" required>
+                    </label>
+
+                    <label>
+                        Longitude
+                        <input name="merchant_lon" type="number" step="any" min="-180" max="180" value="-73.9352"
+                            required>
+                    </label>
+
+                    <input type="hidden" name="transaction_datetime" id="transaction_datetime">
+
+                    <button type="submit" id="submit-btn">
+                        Analyze transaction
+                    </button>
+                </form>
+
+                <p id="error" class="error" hidden></p>
+            </section>
+
+            <section id="result" class="card result" hidden>
+                <h2 id="result-title"></h2>
+                <p>Fraud probability</p>
+                <h1 id="risk-percent"></h1>
+                <p id="risk-level"></p>
+                <p id="notice"></p>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', path='script.js') }}"></script>
+</body>
+
+</html>
