@@ -3,6 +3,11 @@
 # 🛡️ AI Fraud Sentinel
 ### Intelligent Real-Time Credit Card Fraud Detection & Risk Scoring System
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-frauddetection.duckdns.org-brightgreen?style=for-the-badge&logo=render&logoColor=white)](https://frauddetection.duckdns.org/)
+[![AWS EC2](https://img.shields.io/badge/AWS-EC2%20Deployed-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
+[![SSL / HTTPS](https://img.shields.io/badge/SSL-Certbot%20%2F%20HTTPS-003A70?style=for-the-badge&logo=letsencrypt&logoColor=white)](https://certbot.eff.org/)
+[![Domain DuckDNS](https://img.shields.io/badge/Domain-DuckDNS-F48024?style=for-the-badge)](https://www.duckdns.org/)
+<br>
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Khansahab2/Credit-Card-Fraud-Detection-)
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-Image-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/khansahab2/credit-card-fraud-detection)
 [![Python Version](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -10,16 +15,23 @@
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Random%20Forest-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![Imbalanced-Learn](https://img.shields.io/badge/SMOTE--NC-Synthetic%20Sampling-FF6F00?style=for-the-badge)](https://imbalanced-learn.org/)
 
+<br>
+
+> 🌐 **Live Production Application**: **[https://frauddetection.duckdns.org/](https://frauddetection.duckdns.org/)**  
+> 🚀 Hosted on **AWS EC2** | 🛡️ Secured with **Let's Encrypt SSL (Certbot)** | 🌍 Dynamic DNS via **DuckDNS**
+
 <p align="center">
   <b>A production-grade machine learning system that combats severe class imbalance to catch fraudulent financial transactions in real time with an 82.95% recall rate.</b>
 </p>
 
+[🌐 Live Demo](https://frauddetection.duckdns.org/) •
 [Explore Problem Statement](#-1-problem-statement) •
 [Solution & Techniques](#-2-how-i-solved-it--techniques-used) •
 [Model Comparison](#-3-model-comparison--evaluation-metrics) •
 [System Architecture](#-4-system-architecture) •
-[Docker Hub](#-5-docker-hub-deployment) •
-[Installation Guide](#-6-installation--quick-start)
+[Cloud Deployment](#-5-cloud-deployment-aws-ec2--duckdns--ssl) •
+[Docker Hub](#-6-docker-hub-deployment) •
+[Installation Guide](#-7-installation--quick-start)
 
 ---
 
@@ -27,6 +39,7 @@
 
 ## 📑 Table of Contents
 
+- [🌐 Live Application](#-live-application)
 - [🎯 1. Problem Statement](#-1-problem-statement)
 - [💡 2. How I Solved It & Techniques Used](#-2-how-i-solved-it--techniques-used)
   - [Techniques & Methodology](#techniques--methodology)
@@ -38,13 +51,26 @@
   - [Feature Importance Breakdown](#feature-importance-breakdown)
   - [Business & Financial Impact](#business--financial-impact)
 - [🏗️ 4. System Architecture](#-4-system-architecture)
-- [🐳 5. Docker Hub Deployment](#-5-docker-hub-deployment)
-- [🚀 6. Installation & Quick Start](#-6-installation--quick-start)
+- [☁️ 5. Cloud Deployment (AWS EC2 + DuckDNS + SSL)](#️-5-cloud-deployment-aws-ec2--duckdns--ssl)
+  - [Infrastructure Overview](#infrastructure-overview)
+  - [Step-by-Step Cloud Configuration](#step-by-step-cloud-configuration)
+- [🐳 6. Docker Hub Deployment](#-6-docker-hub-deployment)
+- [🚀 7. Installation & Quick Start](#-7-installation--quick-start)
   - [Prerequisites](#prerequisites)
   - [Local Setup](#local-setup)
-- [📡 7. API Reference & Testing](#-7-api-reference--testing)
-- [🖥️ 8. User Interface Walkthrough](#️-8-user-interface-walkthrough)
-- [🤝 9. Contributing & License](#-9-contributing--license)
+- [📡 8. API Reference & Testing](#-8-api-reference--testing)
+- [🖥️ 9. User Interface Walkthrough](#️-9-user-interface-walkthrough)
+- [🤝 10. Contributing & License](#-10-contributing--license)
+
+---
+
+## 🌐 Live Application
+
+The complete application is deployed and publicly accessible online:
+
+* 🔗 **Live Website**: [https://frauddetection.duckdns.org/](https://frauddetection.duckdns.org/)
+* 📚 **Interactive Swagger Docs**: [https://frauddetection.duckdns.org/docs](https://frauddetection.duckdns.org/docs)
+* 🩺 **Health Check API**: [https://frauddetection.duckdns.org/health](https://frauddetection.duckdns.org/health)
 
 ---
 
@@ -57,15 +83,15 @@ Credit card fraud poses an existential threat to modern digital payment ecosyste
    - A naive model that classifies every transaction as legitimate would achieve **99.41% accuracy**, yet fail to detect a single fraudulent chargeback.
 
 2. **Asymmetric Cost of Errors**:
-   - **False Negatives (Missed Fraud)**: Direct capital loss, chargeback fees, and reputational damage.
-   - **False Positives (False Alarms)**: Minor customer friction or temporary security verification.
-   - Therefore, prioritizing **Fraud Recall** without completely eroding precision is the true north metric.
+   - **False Negatives (Missed Fraud)**: Direct capital loss, chargeback penalty fees, and customer churn.
+   - **False Positives (False Alarms)**: Minor customer friction or temporary verification.
+   - Prioritizing **Fraud Recall** while maintaining an operational precision boundary is the critical objective.
 
 3. **Complex Mixed-Feature Spaces**:
-   - Transaction data contains both continuous features (transaction amount, geographical coordinates, cardholder age) and discrete/nominal categories (merchant category, transaction hour, weekend flags). Standard oversampling (e.g., standard SMOTE) produces corrupt or nonsensical categorical values.
+   - Transaction data contains continuous variables (dollar amount, GPS coordinates, cardholder age) and discrete/nominal categories (merchant category, transaction hour, weekend flags). Standard oversampling generates invalid categorical indices.
 
 4. **Sub-Second Latency Requirement**:
-   - Fraud scoring must occur synchronously during authorization, requiring dynamic feature calculation and model inference in **under 50 milliseconds**.
+   - Fraud scoring must occur synchronously during payment authorization, requiring dynamic feature calculation and model inference in **under 50 milliseconds**.
 
 ---
 
@@ -223,19 +249,24 @@ is_weekend   [ ] 0.21%
 
 ```mermaid
 flowchart TD
-    subgraph Client_Layer ["Client & Interaction Layer"]
-        UI["🖥️ Modern Web UI\n(HTML5, CSS3, Vanilla JS)"]
-        Clock["🕒 Custom Interactive Clock & Calendar Widget"]
-        cURL["📡 External Client / cURL / REST API"]
+    subgraph Internet_Layer ["🌐 Public Traffic & Cloud Networking"]
+        User["👤 End User / Merchant Browser"]
+        DNS["🌍 DuckDNS\n(frauddetection.duckdns.org)"]
+        EC2["☁️ AWS EC2 Instance\n(Ubuntu Server - Elastic / Public IP)"]
     end
 
-    subgraph API_Layer ["API Gateway & Routing Layer"]
-        FastAPI["⚡ FastAPI Application\n(app.py - ASGI Uvicorn)"]
+    subgraph Security_Proxy ["🛡️ Security & Reverse Proxy Layer"]
+        Certbot["🔒 Let's Encrypt / Certbot\n(Automated SSL/TLS Termination)"]
+        Nginx["🚦 Nginx Web Server\n(Port 443 HTTPS ➜ Reverse Proxy ➜ Port 8000)"]
+    end
+
+    subgraph Application_Layer ["⚡ Application & API Gateway"]
+        FastAPI["⚡ FastAPI (ASGI Uvicorn)\n(app.py)"]
         HealthEndpoint["/health\n(Status & Model Audit)"]
         SubmitEndpoint["/submit\n(Transaction Scoring)"]
     end
 
-    subgraph Validation_Layer ["Schema & Feature Engineering Layer"]
+    subgraph Validation_Layer ["🧠 Schema & Feature Engineering Engine"]
         Pydantic["🛡️ Pydantic v2 Validator\n(schema/user_input.py)"]
         Haversine["📍 Haversine Distance Engine\nCustomer (lat, lon) ↔ Merchant (lat, lon)"]
         Temporal["🕒 Temporal & Demographics Engine\nHour, Day, Weekend, Cardholder Age"]
@@ -243,19 +274,18 @@ flowchart TD
         FeatureConfig["⚙️ Feature Alignment Validator\n(config/feature_validator.py)"]
     end
 
-    subgraph Inference_Layer ["Machine Learning Inference Core"]
+    subgraph Inference_Layer ["🌲 Machine Learning Inference Core"]
         PredictModule["🧠 Model Manager\n(model/predict.py)"]
         RFModel["🌲 Random Forest Classifier\n(fraud_model_with_smotenc.pkl)"]
         Artifacts["📦 Metadata & Encoders\n(fraud_model_comparison_artifacts.pkl)"]
     end
 
-    subgraph Output_Layer ["Response & Decision"]
-        Decision["JSON Decision:\n• Prediction (0: Legit, 1: Fraud)\n• Estimated Risk Probability (%)\n• Feature Summary"]
-    end
+    User -->|HTTPS Request on Port 443| DNS
+    DNS -->|Resolves to Public IP| EC2
+    EC2 --> Nginx
+    Certbot -.->|Manages SSL Certificates| Nginx
+    Nginx -->|Passes traffic to localhost:8000| FastAPI
 
-    UI -->|Form POST| SubmitEndpoint
-    Clock -.->|Time / Date Sync| UI
-    cURL -->|JSON / Form Payload| SubmitEndpoint
     FastAPI --> HealthEndpoint
     FastAPI --> SubmitEndpoint
 
@@ -270,16 +300,103 @@ flowchart TD
     FeatureConfig --> PredictModule
     PredictModule --> RFModel
     Artifacts -.-> PredictModule
-    RFModel --> Decision
-    Decision -->|Asynchronous JSON| UI
-    Decision -->|API Response| cURL
+    RFModel -->|Real-time Fraud Score| FastAPI
+    FastAPI -->|Secure JSON Decision| User
 ```
 
 ---
 
-## 🐳 5. Docker Hub Deployment
+## ☁️ 5. Cloud Deployment (AWS EC2 + DuckDNS + SSL)
 
-The application is fully containerized and hosted publicly on **Docker Hub**. You can pull and run the pre-built, production-ready container image in seconds without configuring Python or local virtual environments:
+The project is hosted in a production cloud environment on **Amazon Web Services (AWS)** with an enterprise-grade SSL/TLS encrypted ingress pipeline.
+
+```
++-----------------------------------------------------------------------------------+
+|                               AWS EC2 INSTANCE                                     |
+|                                                                                   |
+|  [ Internet: HTTPS (Port 443) ]                                                   |
+|                │                                                                  |
+|                ▼                                                                  |
+|       ┌──────────────────┐       SSL/TLS Encrypted                                |
+|       │  Nginx Server    │ ◄───  via Let's Encrypt / Certbot                      |
+|       └────────┬─────────┘       (Domain: frauddetection.duckdns.org)             |
+|                │                                                                  |
+|                ▼ Reverse Proxy                                                    |
+|       ┌──────────────────┐                                                        |
+|       │  FastAPI/Uvicorn │ ◄───  Serves UI & Machine Learning Predictions         |
+|       │   (Port 8000)    │       (Daemonized Service)                             |
+|       └──────────────────┘                                                        |
++-----------------------------------------------------------------------------------+
+```
+
+### Infrastructure Overview
+
+1. **AWS EC2 (Elastic Compute Cloud)**:
+   - Linux Virtual Machine running in a secure AWS VPC.
+   - Configured Inbound Security Group rules for **Port 80 (HTTP)**, **Port 443 (HTTPS)**, and **Port 22 (SSH)**.
+
+2. **DuckDNS (Dynamic DNS Resolution)**:
+   - Configured custom domain: **`frauddetection.duckdns.org`** pointing directly to the EC2 Public IP address.
+   - Set up an automated background cron sync ensuring domain continuity across IP updates.
+
+3. **Certbot (Let's Encrypt SSL/TLS)**:
+   - Enabled end-to-end HTTPS encryption with valid, trusted SSL certificates.
+   - Configured automatic cron renewal hooks (`certbot renew`) to prevent certificate expiry.
+
+4. **Nginx Reverse Proxy**:
+   - Acts as the public-facing gateway on standard HTTPS (port 443).
+   - Terminates SSL encryption and cleanly reverse-proxies requests internally to `http://127.0.0.1:8000`.
+
+---
+
+### Step-by-Step Cloud Configuration
+
+For reference or replication, here is how the production server was configured:
+
+#### 1. Configure DuckDNS Cron Sync on EC2
+```bash
+mkdir -p ~/duckdns && cd ~/duckdns
+cat << 'EOF' > duck.sh
+echo url="https://www.duckdns.org/update?domains=frauddetection&token=YOUR_DUCKDNS_TOKEN&ip=" | curl -k -o ~/duckdns/duck.log -K -
+EOF
+chmod 700 duck.sh
+# Add to crontab to run every 5 minutes:
+# */5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1
+```
+
+#### 2. Configure Nginx Reverse Proxy (`/etc/nginx/sites-available/frauddetection`)
+```nginx
+server {
+    server_name frauddetection.duckdns.org;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+#### 3. Enable HTTPS via Certbot
+```bash
+sudo apt update && sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d frauddetection.duckdns.org --non-interactive --agree-tos -m your-email@example.com
+```
+
+#### 4. Run Application with Systemd / Daemon
+```bash
+# Production systemd service runs FastAPI on port 8000:
+sudo systemctl restart nginx
+uvicorn app:app --host 127.0.0.1 --port 8000 --workers 4
+```
+
+---
+
+## 🐳 6. Docker Hub Deployment
+
+The application is containerized and publicly hosted on **Docker Hub**. You can pull and run the production image on any machine with Docker installed:
 
 [![Docker Hub Repository](https://img.shields.io/badge/Docker%20Hub-khansahab2%2Fcredit--card--fraud--detection-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/khansahab2/credit-card-fraud-detection)
 
@@ -298,11 +415,11 @@ docker run -d -p 8000:8000 --name fraud-detector khansahab2/credit-card-fraud-de
 docker ps -f name=fraud-detector
 ```
 
-Access the dashboard at **`http://localhost:8000`** or test the API at **`http://localhost:8000/health`**.
+Access the dashboard locally at **`http://localhost:8000`** or the cloud instance at **`https://frauddetection.duckdns.org`**.
 
 ---
 
-## 🚀 6. Installation & Quick Start
+## 🚀 7. Installation & Quick Start
 
 ### Prerequisites
 - **Python**: Version `3.10`, `3.11`, or `3.12` installed.
@@ -342,22 +459,22 @@ uvicorn app:app --reload --host 0.0.0.0 --port 8000
 ```
 
 #### 5. Open in Your Browser
-- **Web Interface**: [http://localhost:8000](http://localhost:8000)
-- **Interactive Swagger Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc API Spec**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+- **Local Web Interface**: [http://localhost:8000](http://localhost:8000)
+- **Local Swagger Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Production Live Deployment**: [https://frauddetection.duckdns.org](https://frauddetection.duckdns.org)
 
 ---
 
-## 📡 7. API Reference & Testing
+## 📡 8. API Reference & Testing
 
 ### Health Check Endpoint
-Audits model status, version, and artifacts.
+Audits model status, version, and loaded artifacts.
 
 - **URL**: `/health`
 - **Method**: `GET`
-- **Example cURL**:
+- **Live cURL**:
   ```bash
-  curl -X GET http://localhost:8000/health
+  curl -X GET https://frauddetection.duckdns.org/health
   ```
 - **Response**:
   ```json
@@ -392,9 +509,9 @@ Evaluates an incoming transaction against the model.
 | `merchant_lat` | Float | Yes | Merchant Latitude (-90 to 90) | `40.7589` |
 | `merchant_lon` | Float | Yes | Merchant Longitude (-180 to 180) | `-73.9851` |
 
-#### Example cURL Test
+#### Live cURL Test
 ```bash
-curl -X POST http://localhost:8000/submit \
+curl -X POST https://frauddetection.duckdns.org/submit \
   -F "amount=499.95" \
   -F "category=shopping_net" \
   -F "transaction_date=2024-03-15" \
@@ -429,7 +546,7 @@ curl -X POST http://localhost:8000/submit \
 
 ---
 
-## 🖥️ 8. User Interface Walkthrough
+## 🖥️ 9. User Interface Walkthrough
 
 The web dashboard is built for risk analysts, auditors, and merchants:
 1. **Glassmorphic Risk Card**: Clean visual hierarchy showing input fields for monetary, temporal, and spatial values.
@@ -438,7 +555,7 @@ The web dashboard is built for risk analysts, auditors, and merchants:
    - AM / PM toggle switches.
    - Instant 1-click presets: `09:00 AM`, `01:00 PM`, `06:30 PM`, `10:00 PM`, or `⚡ Now`.
 3. **Smart Date Pickers**: Automatically defaults to current timestamp and sets maximum bounds on cardholder Date of Birth.
-4. **Dynamic Geolocation Feedback**: Automatically prepares cardholder and merchant latitude/longitude coordinates to feed the real-time distance calculator.
+4. **Dynamic Geolocation Feedback**: Automatically computes distance between cardholder and merchant coordinates using the Haversine formula.
 5. **Instant Result Card**: Animates into view displaying the exact predicted class and computed features without page refresh.
 
 ---
@@ -471,7 +588,7 @@ Credit-Card-Fraud-Detection-/
 
 ---
 
-## 🤝 9. Contributing & License
+## 🤝 10. Contributing & License
 
 Contributions, feedback, and issue reports are welcome!
 1. Fork the Project.
